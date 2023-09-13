@@ -30,4 +30,5 @@ jobs:
         gcloud run deploy nest-app \
           --image gcr.io/mais-cidade-398922/nest-app \
           --platform managed \
+          --region=us-central1 \
           --allow-unauthenticated
