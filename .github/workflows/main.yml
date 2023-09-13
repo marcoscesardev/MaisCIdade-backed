@@ -12,12 +12,24 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
+    
     - name: Configure Google Cloud CLI
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: '{"type": "service_account", "project_id": "mais-cidade-398922", "private_key_id": "ec26ca66ac64d19efd3e45c1582841aab94a666f", "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCgnjGhjSr8tRxU\n7Jbkf/dX3d2eL5Nz3fQOztMroFfRAIVuURImo2ed+c9JrECPW0sQTdt5brqu7u5s\nkdb3ROJvxc+mHMy1JIhlzivorMSQWp/utDSwyylrnLFFFVKPT2AZEZbadxcgACRR\ngrhZqyC1OuDQ8OjDLm7tYgF7k5R076toj9QGaisD6oRFVH2gaE22pak9/s2bI0YH\nIJiwcnBHLNEyXH04BA+jUCglyDpchZqro92CoIH/aS6ygXVDUcDekdGQGD+w+57C\nA5bW/dKyI6JomqRi6Ofs+p6sbSVsFgcVuyiDu9jBN6RRCpFZMZYAoexDv8nTGGQZ\nJlJfUQ2rAgMBAAECggEABKIbl2ftlgWZcB+1CJliZq/5PR9tNvnvmN/BerAw6FAG\nCVUgW2n6SrXSk3L7F8eP5kQAsUOO8g3lZc9dLpvXllbT8xxAkXcg0iL85ETblLhw\nhZ/AJ1ts8fQ+rtn7HDQzdvWpbtrhmWQ3p/xH2hpUIrY0lwJkDIFR5NofZdOvhCH8\nDx/0sdc9Y3vf/EMjzWpxn6NuDuGylLq87u7Nfcs72SxMGrp3pvCXbhJ5zUjw/yNn\nDE1y5hJRTL46tmWWlp5qq96GEJvGGH0cwXc5rFxXSKB7p5MJS3XEgtR2YQp/D5S1\nFeN+xEXqelOsQ45X6ooyd5c8dDDRDR2IBrhIz8r2JQKBgQDUgmrpYw0OvAs7aqtJ\nRIPADRo8xxY9Sf1nAqlBeNZxgphYyeKD/lNiv3Ab24riHgQFMsIujotFTZTmLIEU\nV7NhIJT+AtNYyvmwSR2XDvDxPMOs+BitvqtvINRiJYFQIa3Djnas9M/22kdW7h6b\npq6lqcvCcqR1sUVBQ4jGpOPxpwKBgQDBfSDyP7U73p6yQVr+hj52ftB1SrqYhPfg\nR97Oo6OgdvfTmxyN2sy5QiLS+X//eDTHaYM0eAO36cBQ1ZWJ/Y9wbVJ8DnnSNlj4\nNiRWo0iUJDnNNrpQN+aKQK03PtSHNs275fqGjuWNPEv3GMSgMwECG24Xeme8rk41\nSM+CX8wcXQKBgQDAv8YfCCOI0NDTRK4113o00O2SYPVwA9NfAo/ofaTr8gsixYK6\nPA0ADSmvatMuwxDcciyks8/ovTSoDYfKnr1qBHZ/aqqt5/TPi5HWOMwb0wSct68S\nsFWohzt8Bg6jUtjb/jTwLWEPwu5gD70davMP+dGB/h/jTDXHu2ys2FSUEwKBgE0j\npc7ut0J3Lq3CgJSY0K5NQK6CbIICARDZlmqrssB2rbcfT/L+GECDrX6PGgiv09rs\npfJ1JoZcGuAfRs8M1/LqosfyvX6hTDco3rPrxTPKfYDjIMR6hN75ihVMZ07A+qS+\nu3KJ5dq4/1Az/7AepXhBl1Kk6la+5083CAPiTW3BAoGBALIlTXpnc76niF6sYajt\nkMvG0RjvKKBFXmwpBhgWq6XSgIiRjZwXntQp5jBt53OcezRjIyGjiKZUv7GMxkWH\n0KteQ9JpX66rQCY1gIH1nimuXTPfO74ssCZrZQIeDy3PlGH6iMTFey4MvqRDqrRB\nkhFGCujlOf2C5gbWwY/ya8Ig\n-----END PRIVATE KEY-----\n", "client_email": "493642773301-compute@developer.gserviceaccount.com", "client_id": "107843907562359504621", "auth_uri": "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://oauth2.googleapis.com/token", "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs", "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/493642773301-compute%40developer.gserviceaccount.com", "universe_domain": "googleapis.com" }'      
+    
+    - name: Set up gcloud Cloud SDK environment
+      # You may pin to the exact commit or the version.
+      # uses: google-github-actions/setup-gcloud@e30db14379863a8c79331b04a9969f4c1e225e0b
+      uses: google-github-actions/setup-gcloud@v1.1.1
       with:
         project_id: mais-cidade-398922
-        service_account_key: '{"type": "service_account", "project_id": "mais-cidade-398922", "private_key_id": "ec26ca66ac64d19efd3e45c1582841aab94a666f", "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCgnjGhjSr8tRxU\n7Jbkf/dX3d2eL5Nz3fQOztMroFfRAIVuURImo2ed+c9JrECPW0sQTdt5brqu7u5s\nkdb3ROJvxc+mHMy1JIhlzivorMSQWp/utDSwyylrnLFFFVKPT2AZEZbadxcgACRR\ngrhZqyC1OuDQ8OjDLm7tYgF7k5R076toj9QGaisD6oRFVH2gaE22pak9/s2bI0YH\nIJiwcnBHLNEyXH04BA+jUCglyDpchZqro92CoIH/aS6ygXVDUcDekdGQGD+w+57C\nA5bW/dKyI6JomqRi6Ofs+p6sbSVsFgcVuyiDu9jBN6RRCpFZMZYAoexDv8nTGGQZ\nJlJfUQ2rAgMBAAECggEABKIbl2ftlgWZcB+1CJliZq/5PR9tNvnvmN/BerAw6FAG\nCVUgW2n6SrXSk3L7F8eP5kQAsUOO8g3lZc9dLpvXllbT8xxAkXcg0iL85ETblLhw\nhZ/AJ1ts8fQ+rtn7HDQzdvWpbtrhmWQ3p/xH2hpUIrY0lwJkDIFR5NofZdOvhCH8\nDx/0sdc9Y3vf/EMjzWpxn6NuDuGylLq87u7Nfcs72SxMGrp3pvCXbhJ5zUjw/yNn\nDE1y5hJRTL46tmWWlp5qq96GEJvGGH0cwXc5rFxXSKB7p5MJS3XEgtR2YQp/D5S1\nFeN+xEXqelOsQ45X6ooyd5c8dDDRDR2IBrhIz8r2JQKBgQDUgmrpYw0OvAs7aqtJ\nRIPADRo8xxY9Sf1nAqlBeNZxgphYyeKD/lNiv3Ab24riHgQFMsIujotFTZTmLIEU\nV7NhIJT+AtNYyvmwSR2XDvDxPMOs+BitvqtvINRiJYFQIa3Djnas9M/22kdW7h6b\npq6lqcvCcqR1sUVBQ4jGpOPxpwKBgQDBfSDyP7U73p6yQVr+hj52ftB1SrqYhPfg\nR97Oo6OgdvfTmxyN2sy5QiLS+X//eDTHaYM0eAO36cBQ1ZWJ/Y9wbVJ8DnnSNlj4\nNiRWo0iUJDnNNrpQN+aKQK03PtSHNs275fqGjuWNPEv3GMSgMwECG24Xeme8rk41\nSM+CX8wcXQKBgQDAv8YfCCOI0NDTRK4113o00O2SYPVwA9NfAo/ofaTr8gsixYK6\nPA0ADSmvatMuwxDcciyks8/ovTSoDYfKnr1qBHZ/aqqt5/TPi5HWOMwb0wSct68S\nsFWohzt8Bg6jUtjb/jTwLWEPwu5gD70davMP+dGB/h/jTDXHu2ys2FSUEwKBgE0j\npc7ut0J3Lq3CgJSY0K5NQK6CbIICARDZlmqrssB2rbcfT/L+GECDrX6PGgiv09rs\npfJ1JoZcGuAfRs8M1/LqosfyvX6hTDco3rPrxTPKfYDjIMR6hN75ihVMZ07A+qS+\nu3KJ5dq4/1Az/7AepXhBl1Kk6la+5083CAPiTW3BAoGBALIlTXpnc76niF6sYajt\nkMvG0RjvKKBFXmwpBhgWq6XSgIiRjZwXntQp5jBt53OcezRjIyGjiKZUv7GMxkWH\n0KteQ9JpX66rQCY1gIH1nimuXTPfO74ssCZrZQIeDy3PlGH6iMTFey4MvqRDqrRB\nkhFGCujlOf2C5gbWwY/ya8Ig\n-----END PRIVATE KEY-----\n", "client_email": "493642773301-compute@developer.gserviceaccount.com", "client_id": "107843907562359504621", "auth_uri": "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://oauth2.googleapis.com/token", "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs", "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/493642773301-compute%40developer.gserviceaccount.com", "universe_domain": "googleapis.com" }'
+    
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v1'
+
+    - name: 'Use gcloud CLI'
+      run: 'gcloud info'
 
     - name: Build and push Docker image
       run: |
