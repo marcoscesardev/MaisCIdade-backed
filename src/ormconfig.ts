@@ -12,5 +12,7 @@ export const config: DataSourceOptions = {
   // database: DB_DATABASE,
   migrations: ['migrations/*.ts'],
   migrationsRun: true,
-  ssl: true,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 };
