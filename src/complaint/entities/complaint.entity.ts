@@ -27,6 +27,14 @@ export class Complaint {
   @Column({ nullable: false, type: 'float' })
   longitude: number;
 
+  @Column({
+    nullable: false,
+    name: 'created_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createdAt: Date;
+
   @ManyToOne(() => User, (user) => user.complaints)
   @JoinColumn({ name: 'user_id' })
   user: User;

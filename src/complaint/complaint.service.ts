@@ -18,7 +18,42 @@ export class ComplaintService {
   }
 
   async findAll(): Promise<Complaint[]> {
-    return await this.complaintRepository.find();
+    return await this.complaintRepository.find({
+      relations: ['category'],
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+  }
+
+  async findTopRatedComplaints(): Promise<any[]> {
+    const complaintsWithVotes = await this.complaintRepository
+      .createQueryBuilder('complaint')
+      .leftJoin(
+        `(WITH vote_counts AS (
+          SELECT c.id AS complaint_id,
+                 SUM(CASE WHEN r.valuation = 1 THEN 1 ELSE 0 END) AS positiveVotes,
+                 SUM(CASE WHEN r.valuation = -1 THEN 1 ELSE 0 END) AS negativeVotes
+          FROM complaints c
+          LEFT JOIN rates r ON c.id = r.complaint_id
+          GROUP BY c.id
+      )
+      SELECT v.complaint_id, v.positiveVotes, v.negativeVotes, v.positiveVotes - v.negativeVotes AS totalVotes
+      FROM vote_counts v)`,
+        'votes',
+        'votes.complaint_id = complaint.id',
+      )
+      .leftJoin('categories', 'category', 'category.id = complaint.category_id') // Join com a tabela categories
+      .select('complaint')
+      .addSelect('votes.positiveVotes', 'positiveVotes')
+      .addSelect('votes.negativeVotes', 'negativeVotes')
+      .addSelect('votes.totalVotes', 'totalVotes')
+      .addSelect('category.name', 'categoryName')
+      .orderBy('votes.totalVotes', 'DESC')
+      .limit(5)
+      .getRawMany();
+
+    return complaintsWithVotes;
   }
 
   async findOne(id: any): Promise<Complaint> {

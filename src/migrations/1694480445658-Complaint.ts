@@ -37,6 +37,11 @@ export class Complaint1694480445658 implements MigrationInterface {
             name: 'description',
             type: 'text',
           },
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'CURRENT_TIMESTAMP',
+          },
         ],
         foreignKeys: [
           {

@@ -1,26 +1,47 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRateDto } from './dto/create-rate.dto';
-import { UpdateRateDto } from './dto/update-rate.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Rate } from './entities/rate.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class RatesService {
-  create(createRateDto: CreateRateDto) {
-    return 'This action adds a new rate';
+  constructor(
+    @InjectRepository(Rate)
+    private readonly rateRepository: Repository<Rate>,
+  ) {}
+
+  async create(createRateDto: CreateRateDto) {
+    const newComplaint = this.rateRepository.create(createRateDto);
+    return await this.rateRepository.save(newComplaint);
   }
 
-  findAll() {
-    return `This action returns all rates`;
+  async findByComplaintIdAndUserId(complaintId: number, userId: number) {
+    return await this.rateRepository
+      .createQueryBuilder('rate')
+      .select('COUNT(rate.id)', 'total')
+      .addSelect(
+        'SUM(CASE WHEN rate.valuation = -1 THEN 1 ELSE 0 END)',
+        'negative',
+      )
+      .addSelect(
+        'SUM(CASE WHEN rate.valuation = 1 THEN 1 ELSE 0 END)',
+        'positive',
+      )
+      .addSelect(
+        'MAX(CASE WHEN rate.user = :userId THEN rate.id ELSE NULL END)',
+        'userRateId',
+      )
+      .addSelect(
+        'CASE WHEN MAX(CASE WHEN rate.user = :userId THEN rate.valuation ELSE NULL END) IS NOT NULL THEN MAX(CASE WHEN rate.user = :userId THEN rate.valuation ELSE NULL END) ELSE 0 END',
+        'userValuation',
+      )
+      .where('rate.complaint = :complaintId', { complaintId })
+      .setParameter('userId', userId)
+      .getRawOne();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} rate`;
-  }
-
-  update(id: number, updateRateDto: UpdateRateDto) {
-    return `This action updates a #${id} rate`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} rate`;
+  async remove(id: number): Promise<void> {
+    await this.rateRepository.delete(id);
   }
 }

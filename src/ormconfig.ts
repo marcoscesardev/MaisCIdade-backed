@@ -3,7 +3,7 @@ const DB_HOST = 'localhost';
 const DB_PORT = '5432';
 const DB_USER = 'octoAplicationUser';
 const DB_PASSWORD = 'password';
-const DB_DATABASE = 'octo';
+const DB_DATABASE = 'postgres';
 
 export const config: DataSourceOptions = {
   type: 'postgres',

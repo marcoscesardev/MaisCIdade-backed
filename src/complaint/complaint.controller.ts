@@ -33,6 +33,11 @@ export class ComplaintController {
     return this.complaintService.findAll();
   }
 
+  @Get('top-rated')
+  async getTopRatedComplaints(): Promise<CreateComplaintDto[]> {
+    return this.complaintService.findTopRatedComplaints();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.complaintService.findOne(+id);

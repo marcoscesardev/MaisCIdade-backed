@@ -1,30 +1,32 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Headers,
+} from '@nestjs/common';
 import { RatesService } from './rates.service';
 import { CreateRateDto } from './dto/create-rate.dto';
-import { UpdateRateDto } from './dto/update-rate.dto';
 
 @Controller('rates')
 export class RatesController {
   constructor(private readonly ratesService: RatesService) {}
 
   @Post()
-  create(@Body() createRateDto: CreateRateDto) {
-    return this.ratesService.create(createRateDto);
+  create(@Headers() headers: any, @Body() createRateDto: CreateRateDto) {
+    const { userId } = headers;
+    return this.ratesService.create({
+      ...createRateDto,
+      userId,
+    });
   }
 
-  @Get()
-  findAll() {
-    return this.ratesService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ratesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRateDto: UpdateRateDto) {
-    return this.ratesService.update(+id, updateRateDto);
+  @Get('complaint/:id')
+  findOne(@Headers() headers: any, @Param('id') id: string) {
+    const { userId } = headers;
+    return this.ratesService.findByComplaintIdAndUserId(+id, userId);
   }
 
   @Delete(':id')
