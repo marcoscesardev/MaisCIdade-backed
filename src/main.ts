@@ -9,7 +9,7 @@ async function bootstrap() {
     res.header('Access-Control-Allow-Origin', '*');
     res.header(
       'Access-Control-Allow-Methods',
-      'GET,HEAD,PUT,PATCH,POST,DELETE',
+      'GET,HEAD,PUT,PATCH,POST,DELETE,PATCH',
     );
     res.header(
       'Access-Control-Allow-Headers',

@@ -17,7 +17,9 @@ export class UsersService {
   }
 
   findAll() {
-    return this.userRepository.find();
+    return this.userRepository.find({
+      select: ['id', 'name', 'email', 'level'],
+    });
   }
 
   findOne(id: any) {

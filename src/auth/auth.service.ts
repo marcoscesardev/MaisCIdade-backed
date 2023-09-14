@@ -20,7 +20,7 @@ export class AuthService {
     throw new UnauthorizedException('E-mail ou Senha Inválidos');
   }
 
-  async generateToken(payload: User) {
+  async generateToken({ password, ...payload }: User) {
     return {
       access_token: this.jwtService.sign(
         { email: payload.email, id: payload.id, level: payload.level },
@@ -29,6 +29,7 @@ export class AuthService {
           expiresIn: '1d',
         },
       ),
+      ...payload,
     };
   }
 }

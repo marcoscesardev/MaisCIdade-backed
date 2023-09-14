@@ -29,8 +29,13 @@ export class ComplaintController {
   }
 
   @Get()
-  findAll(@Param() params: any) {
-    return this.complaintService.findAll(params);
+  findAll() {
+    return this.complaintService.findAll();
+  }
+
+  @Get('resolved')
+  async getResolvedComplaints(): Promise<CreateComplaintDto[]> {
+    return this.complaintService.findResolvedComplaints();
   }
 
   @Get('top-rated')

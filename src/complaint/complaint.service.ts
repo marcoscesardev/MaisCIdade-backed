@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import { CreateComplaintDto } from './dto/create-complaint.dto';
 import { UpdateComplaintDto } from './dto/update-complaint.dto';
 import { Complaint } from './entities/complaint.entity';
@@ -17,10 +17,24 @@ export class ComplaintService {
     return await this.complaintRepository.save(newComplaint);
   }
 
-  async findAll(params): Promise<Complaint[]> {
+  async findResolvedComplaints(): Promise<Complaint[]> {
     return await this.complaintRepository.find({
       relations: ['category'],
-      where: params,
+      where: {
+        solvedById: Not(IsNull()),
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+  }
+
+  async findAll(): Promise<Complaint[]> {
+    return await this.complaintRepository.find({
+      relations: ['category'],
+      where: {
+        solvedById: IsNull(),
+      },
       order: {
         createdAt: 'DESC',
       },
