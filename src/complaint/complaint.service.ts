@@ -80,7 +80,7 @@ export class ComplaintService {
     updateComplaintDto: UpdateComplaintDto,
   ): Promise<Complaint> {
     await this.complaintRepository.update(id, updateComplaintDto);
-    return await this.complaintRepository.findOne(id);
+    return await this.complaintRepository.findOne({ where: { id } });
   }
 
   async remove(id: number): Promise<void> {
