@@ -17,9 +17,10 @@ export class ComplaintService {
     return await this.complaintRepository.save(newComplaint);
   }
 
-  async findAll(): Promise<Complaint[]> {
+  async findAll(params): Promise<Complaint[]> {
     return await this.complaintRepository.find({
       relations: ['category'],
+      where: params,
       order: {
         createdAt: 'DESC',
       },

@@ -29,8 +29,8 @@ export class ComplaintController {
   }
 
   @Get()
-  findAll() {
-    return this.complaintService.findAll();
+  findAll(@Param() params: any) {
+    return this.complaintService.findAll(params);
   }
 
   @Get('top-rated')
