@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
   Headers,
@@ -48,7 +48,7 @@ export class ComplaintController {
     return this.complaintService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(
     @Param('id') id: string,
     @Body() updateComplaintDto: UpdateComplaintDto,
