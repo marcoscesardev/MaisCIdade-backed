@@ -51,4 +51,14 @@ export class Complaint {
 
   @OneToMany(() => Rate, (rate) => rate.complaint)
   rates: Rate[];
+
+  @Column({ nullable: true, name: 'solved_by_id' })
+  solvedById: number;
+
+  @ManyToOne(() => User, (user) => user.solvedComplaints)
+  @JoinColumn({ name: 'solved_by_id' })
+  solvedBy: User;
+
+  @Column({ nullable: true })
+  resolution: string;
 }

@@ -23,9 +23,9 @@ export class AuthService {
   async generateToken(payload: User) {
     return {
       access_token: this.jwtService.sign(
-        { email: payload.email, id: payload.id },
+        { email: payload.email, id: payload.id, level: payload.level },
         {
-          secret: 'sua-chave',
+          secret: process.env.JWT_SECRET,
           expiresIn: '1d',
         },
       ),

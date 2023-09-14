@@ -13,7 +13,7 @@ export class AuthMiddleware implements NestMiddleware {
   async validateToken(token: string): Promise<any> {
     try {
       await this.jwtService.verify(token, {
-        secret: 'sua-chave',
+        secret: process.env.JWT_SECRET,
       });
 
       return this.jwtService.decode(token);

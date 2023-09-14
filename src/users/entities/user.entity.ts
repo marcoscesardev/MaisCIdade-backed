@@ -21,4 +21,10 @@ export class User {
 
   @OneToMany(() => Rate, (rate) => rate.user)
   rates: Rate[];
+
+  @OneToMany(() => Complaint, (complaint) => complaint.solvedBy)
+  solvedComplaints: Complaint[];
+
+  @Column({ nullable: true })
+  level: string;
 }
