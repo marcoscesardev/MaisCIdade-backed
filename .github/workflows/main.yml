@@ -3,7 +3,7 @@ name: Deploy to Google Cloud Run
 on:
   push:
     branches:
-      - main  # Defina a branch na qual deseja acionar o workflow
+      - main 
 
 jobs:
   deploy:
