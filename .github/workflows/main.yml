@@ -16,7 +16,7 @@ jobs:
     - name: Configure Google Cloud CLI
       uses: 'google-github-actions/auth@v1'
       with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
+        credentials_json: ${{ secrets.CREDENTIALS_JSON }}
 
     - name: Set up gcloud Cloud SDK environment
       uses: google-github-actions/setup-gcloud@v1.1.1
